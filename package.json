@@ -1,0 +1,22 @@
+{
+    "name": "survivor-game-exports",
+    "version": "1.0.0",
+    "description": "A package for exporting data from the Survivor Game",
+    "main": "index.js",
+    "scripts": {
+        "start": "serve -s -l $PORT .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "survivor",
+        "game",
+        "exports"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.21.1",
+        "serve": "^14.2.4"
+    }
+}
