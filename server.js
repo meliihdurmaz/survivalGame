@@ -18,6 +18,13 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '.', 'index.html'))
 });
 
+app.get('/api', (req, res) => {
+    console.log(req.params);
+    res.json({
+        message: 'Merhaba Dünya!'
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor.`);
 });
