@@ -5,24 +5,15 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS ayarları
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST']
 }));
 
-// app.use(express.static(path.join(__dirname, '.')));
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     app.use(express.static(path.join(__dirname, '.')));
     res.sendFile(path.join(__dirname, '.', 'index.html'))
-});
-
-app.get('/api', (req, res) => {
-    console.log(req.params);
-    res.json({
-        message: 'Merhaba Dünya!'
-    });
 });
 
 app.listen(PORT, () => {
