@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
-	<title>Survivors Clone</title>
+	<title>The Last Viking</title>
 	<style>
 		html,
 		body,
@@ -83,12 +83,43 @@
 			z-index: 1;
 		}
 	</style>
-	<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
-	<link rel="apple-touch-icon" href="index.apple-touch-icon.png" />
+	<link id="-gd-engine-icon" rel="icon" type="image/png" href="./index.icon.png" />
+	<link rel="apple-touch-icon" href="./index.apple-touch-icon.png" />
+	<script>
+        // Telegram WebApp API entegrasyonu
+        function getTelegramUserData() {
+            const tg = window.Telegram.WebApp;
+            const userData = tg.initDataUnsafe.user;
+
+            // Kullanıcı bilgilerini konsola yazdır
+            console.log("Telegram User ID:", userData.id);
+            console.log("Kullanıcı Adı:", userData.username);
+            console.log("Adı:", userData.first_name);
+			fetch('https://f642rqhc-3000.euw.devtunnels.ms/userdata', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(userData)
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log('Success:', data);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+
+            // Godot'a kullanıcı bilgilerini gönder
+            // if (typeof window.setTelegramUserData !== "undefined") {
+            //     window.setTelegramUserData(userData);
+            // }
+        }
+    </script>
 
 </head>
 
-<body>
+<body onload="getTelegramUserData();">
 	<canvas id="canvas">
 		Your browser does not support the canvas tag.
 	</canvas>
@@ -103,21 +134,17 @@
 		<div id="status-notice"></div>
 	</div>
 
+	<script>
+		if (!window.SharedArrayBuffer) {
+			document.getElementById('status').style.display = 'none';
+			setTimeout(() => document.getElementById('status').style.display = '', 1500);
+		}
+	</script>
+	<script src="coi-serviceworker.min.js"></script>
 	<script src="index.js"></script>
 	<script>
-		const tg = window.Telegram.WebApp;
-
-		// Kullanıcı bilgilerini al
-		const userData = tg.initDataUnsafe.user;
-
-		// Örnek kullanıcı bilgilerini konsola yazdır
-		console.log("Telegram User ID:", userData.id);
-		console.log("Kullanıcı Adı:", userData.username);
-		console.log("Adı:", userData.first_name);
-	</script>
-	<script>
-		const GODOT_CONFIG = { "args": [], "canvasResizePolicy": 2, "ensureCrossOriginIsolationHeaders": true, "executable": "index", "experimentalVK": false, "fileSizes": { "index.pck": 4431552, "index.wasm": 43016933 }, "focusCanvas": true, "gdextensionLibs": [] };
-		const GODOT_THREADS_ENABLED = false;
+		const GODOT_CONFIG = { "args": [], "canvasResizePolicy": 2, "ensureCrossOriginIsolationHeaders": true, "executable": "index", "experimentalVK": false, "fileSizes": { "index.pck": 6701808, "index.wasm": 33829596 }, "focusCanvas": true, "gdextensionLibs": [] };
+		const GODOT_THREADS_ENABLED = true;
 		const engine = new Engine(GODOT_CONFIG);
 
 		(function () {
