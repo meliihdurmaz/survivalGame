@@ -86,38 +86,45 @@
 	<link id="-gd-engine-icon" rel="icon" type="image/png" href="./index.icon.png" />
 	<link rel="apple-touch-icon" href="./index.apple-touch-icon.png" />
 	<script>
-		// Telegram WebApp API entegrasyonu
-		async function getTelegramUserData() {
-			const tg = window.Telegram.WebApp;
-			const userData = tg.initDataUnsafe.user;
-			const user = {
-				"username": userData.username,
-				"telegramId": userData.id,
-			};
-			try {
-				const response = await fetch('https://f642rqhc-3000.euw.devtunnels.ms/userdata', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(user)
-				});
-				const data = await response.json();
-				console.log('Success:', data);
-			} catch (error) {
-				console.error('Error:', error);
-			}
+		// // Telegram WebApp API entegrasyonu
+		// async function getTelegramUserData() {
+		// 	const response = await fetch('https://f642rqhc-3000.euw.devtunnels.ms/userdata', {
+		// 		method: 'POST',
+		// 		headers: {
+		// 			'Content-Type': 'application/json'
+		// 		},
+		// 		body: JSON.stringify(user)
+		// 	});
+		// 	const tg = window.Telegram.WebApp;
+		// 	const userData = tg.initDataUnsafe.user;
+		// 	const user = {
+		// 		"username": userData.username,
+		// 		"telegramId": userData.id,
+		// 	};
+		// 	try {
+		// 		const response = await fetch('https://f642rqhc-3000.euw.devtunnels.ms/userdata', {
+		// 			method: 'POST',
+		// 			headers: {
+		// 				'Content-Type': 'application/json'
+		// 			},
+		// 			body: JSON.stringify(user)
+		// 		});
+		// 		const data = await response.json();
+		// 		console.log('Success:', data);
+		// 	} catch (error) {
+		// 		console.error('Error:', error);
+		// 	}
 
 			// Godot'a kullanıcı bilgilerini gönder
 			// if (typeof window.setTelegramUserData !== "undefined") {
 			//     window.setTelegramUserData(userData);
 			// }
-		}
+		// }
 	</script>
 
 </head>
 
-<body onload="getTelegramUserData();">
+<body>
 	<canvas id="canvas">
 		Your browser does not support the canvas tag.
 	</canvas>
