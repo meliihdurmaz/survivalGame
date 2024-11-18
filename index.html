@@ -86,15 +86,18 @@
 	<link id="-gd-engine-icon" rel="icon" type="image/png" href="./index.icon.png" />
 	<link rel="apple-touch-icon" href="./index.apple-touch-icon.png" />
 	<script>
-        // Telegram WebApp API entegrasyonu
-        function getTelegramUserData() {
-            const tg = window.Telegram.WebApp;
-            const userData = tg.initDataUnsafe.user;
+		// Telegram WebApp API entegrasyonu
+		function getTelegramUserData() {
+			// const tg = window.Telegram.WebApp;
+			// const userData = tg.initDataUnsafe.user;
 
-            // Kullanıcı bilgilerini konsola yazdır
-            console.log("Telegram User ID:", userData.id);
-            console.log("Kullanıcı Adı:", userData.username);
-            console.log("Adı:", userData.first_name);
+			// // Kullanıcı bilgilerini konsola yazdır
+			// console.log("Telegram User ID:", userData.id);
+			// console.log("Kullanıcı Adı:", userData.username);
+			// console.log("Adı:", userData.first_name);
+			const userData = {
+				"telegram_id": 123456
+			};
 			fetch('https://f642rqhc-3000.euw.devtunnels.ms/userdata', {
 				method: 'POST',
 				headers: {
@@ -102,20 +105,20 @@
 				},
 				body: JSON.stringify(userData)
 			})
-			.then(response => response.json())
-			.then(data => {
-				console.log('Success:', data);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
+				.then(response => response.json())
+				.then(data => {
+					console.log('Success:', data);
+				})
+				.catch((error) => {
+					console.error('Error:', error);
+				});
 
-            // Godot'a kullanıcı bilgilerini gönder
-            // if (typeof window.setTelegramUserData !== "undefined") {
-            //     window.setTelegramUserData(userData);
-            // }
-        }
-    </script>
+			// Godot'a kullanıcı bilgilerini gönder
+			// if (typeof window.setTelegramUserData !== "undefined") {
+			//     window.setTelegramUserData(userData);
+			// }
+		}
+	</script>
 
 </head>
 
