@@ -1,6 +1,0 @@
-type: static
-name: My Godot Project
-env:
-  HTTP_HEADERS:
-    Cross-Origin-Opener-Policy: same-origin
-    Cross-Origin-Embedder-Policy: require-corp
