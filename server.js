@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.static(path.join(__dirname, '.')));
 
 app.use((req, res, next) => {
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
@@ -18,7 +19,6 @@ app.use((req, res, next) => {
 
 
 app.get('/', async (req, res) => {
-    app.use(express.static(path.join(__dirname, '.')));
     res.sendFile(path.join(__dirname, '.', 'index.html'))
 });
 
