@@ -11,8 +11,13 @@ app.use((req, res, next) => {
     next();
 });
 
-
-app.use(express.static(path.join(__dirname, ".")));
+// Tüm statik dosyalara Cross-Origin Isolation başlıkları ekleyin
+app.use(express.static(path.join(__dirname, "."), {
+    setHeaders: (res) => {
+        res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+        res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    }
+}));
 
 // Serve the index file
 app.get("/", (req, res) => {
@@ -20,7 +25,6 @@ app.get("/", (req, res) => {
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     res.sendFile(path.join(__dirname, ".", "index.html"));
 });
-
 
 // Sunucuyu başlatın
 app.listen(PORT, () => {
