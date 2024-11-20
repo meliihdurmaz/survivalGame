@@ -16,12 +16,13 @@ app.use(express.static(path.join(__dirname, ".")));
 
 // Serve the index file
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, ".", "index.html"));
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.sendFile(path.join(__dirname, ".", "index.html"));
 });
 
 
 // Sunucuyu başlatın
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
-  });
-  
+});
