@@ -12,12 +12,7 @@ app.use((req, res, next) => {
 });
 
 // Tüm statik dosyalara Cross-Origin Isolation başlıkları ekleyin
-app.use(express.static(path.join(__dirname, "."), {
-    setHeaders: (res) => {
-        res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-        res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    }
-}));
+app.use(express.static(path.join(__dirname, ".")));
 
 // Serve the index file
 app.get("/", (req, res) => {
