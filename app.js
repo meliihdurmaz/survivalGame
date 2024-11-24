@@ -16,6 +16,43 @@ const token = process.env.TELEGRAM_BOT_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 
+
+
+
+
+
+
+// app.use(helmet());
+
+// Helmet ile başlıkları yönetmek
+// app.use(helmet({
+//     contentSecurityPolicy: {
+//         directives: {
+//             defaultSrc: ["'self'"],
+//             scriptSrc: ["'self'", "'unsafe-inline'"],
+//             frameAncestors: ["'self'", "https://survivalgame.onrender.com", "https://web.telegram.org"]
+//         }
+//     },
+//     crossOriginEmbedderPolicy: true, // "require-corp" için Helmet
+//     crossOriginOpenerPolicy: { policy: "same-origin" }, // COOP için Helmet
+// }));
+
+
+app.use((req, res, next) => {
+    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+    res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+    res.setHeader("Permissions-Policy", "shared-array-buffer=(self)");
+    next();
+  });
+  
+
+// Tüm statik dosyalara Cross-Origin Isolation başlıkları ekleyin
+// app.use(express.static(path.join(__dirname, ".")));
+
+app.use(
+    express.static(path.join(__dirname, "."))
+);
+
 bot.onText(/\/start/, async (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id;
@@ -38,47 +75,6 @@ bot.onText(/\/start/, async (msg) => {
         }
     );
 });
-
-
-
-
-
-// app.use(helmet());
-
-// Helmet ile başlıkları yönetmek
-// app.use(helmet({
-//     contentSecurityPolicy: {
-//         directives: {
-//             defaultSrc: ["'self'"],
-//             scriptSrc: ["'self'", "'unsafe-inline'"],
-//             frameAncestors: ["'self'", "https://survivalgame.onrender.com", "https://web.telegram.org"]
-//         }
-//     },
-//     crossOriginEmbedderPolicy: true, // "require-corp" için Helmet
-//     crossOriginOpenerPolicy: { policy: "same-origin" }, // COOP için Helmet
-// }));
-
-
-// Diğer güvenlik başlıklarını manuel olarak ekleyebilirsiniz
-// app.use((req, res, next) => {
-//     res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-//     res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-//     next();
-// });
-
-// Tüm statik dosyalara Cross-Origin Isolation başlıkları ekleyin
-// app.use(express.static(path.join(__dirname, ".")));
-
-app.use(
-    express.static(path.join(__dirname, "."), {
-        setHeaders: (res, filePath) => {
-            res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-            res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-        },
-    })
-);
-
-
 
 // Sunucuyu başlatın
 app.listen(PORT, () => {
