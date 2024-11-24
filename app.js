@@ -46,6 +46,7 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
       frameAncestors: ["'self'", "https://survivalgame.onrender.com"]
     }
   }));
