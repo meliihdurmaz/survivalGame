@@ -37,18 +37,20 @@ const bot = new TelegramBot(token, { polling: true });
 //     crossOriginOpenerPolicy: { policy: "same-origin" }, // COOP için Helmet
 // }));
 
-
 app.use((req, res, next) => {
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
-    res.setHeader('Permissions-Policy', 'sharedArrayBuffer=("*")');
+    res.setHeader('Permissions-Policy', 'sharedArrayBuffer=(self)');
     next();
-});
+  });
+  
   
 
 app.use(
+    
     express.static(path.join(__dirname, "."))
+
 );
 
 bot.onText(/\/start/, async (msg) => {
