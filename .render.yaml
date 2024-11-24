@@ -1,8 +1,0 @@
-routes:
-  - type: static
-    path: /
-    headers:
-      - name: Cross-Origin-Opener-Policy
-        value: same-origin
-      - name: Cross-Origin-Embedder-Policy
-        value: require-corp
