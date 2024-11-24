@@ -41,7 +41,7 @@ bot.onText(/\/start/, async (msg) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.use(helmet());
+// app.use(helmet());
 
 app.use(helmet.contentSecurityPolicy({
     directives: {
@@ -59,6 +59,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+    res.setHeader("X-Frame-Options", "ALLOW-FROM https://survivalgame.onrender.com");
+    next();
+  });
+  
 // Tüm statik dosyalara Cross-Origin Isolation başlıkları ekleyin
 app.use(express.static(path.join(__dirname, ".")));
 
