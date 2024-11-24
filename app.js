@@ -47,7 +47,7 @@ app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
-      frameAncestors: ["'self'", "https://survivalgame.onrender.com"]
+      frameAncestors: ["'self'", "https://survivalgame.onrender.com", "https://web.telegram.org"]
     }
   }));
 
