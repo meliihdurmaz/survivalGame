@@ -39,15 +39,13 @@ const bot = new TelegramBot(token, { polling: true });
 
 
 app.use((req, res, next) => {
-    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-    res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-    res.setHeader("Permissions-Policy", "shared-array-buffer=(self)");
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
+    res.setHeader('Permissions-Policy', 'sharedArrayBuffer=("*")');
     next();
-  });
+});
   
-
-// Tüm statik dosyalara Cross-Origin Isolation başlıkları ekleyin
-// app.use(express.static(path.join(__dirname, ".")));
 
 app.use(
     express.static(path.join(__dirname, "."))
