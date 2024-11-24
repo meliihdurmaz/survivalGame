@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const TelegramBot = require('node-telegram-bot-api');
+const helmet = require('helmet');
 
 require('dotenv').config();
 
@@ -10,32 +11,45 @@ require('dotenv').config();
 const token = process.env.TELEGRAM_BOT_TOKEN;
 
 // Telegram Bot'unuzu başlatıyoruz
-const bot = new TelegramBot(token, {polling: true});
+const bot = new TelegramBot(token, { polling: true });
 
-// Kullanıcıdan gelen mesajları dinliyoruz
-bot.on('message', (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text;
 
-  // Gelen mesajı kontrol edip cevap veriyoruz
-  if (text.toLowerCase() === 'merhaba') {
-    bot.sendMessage(chatId, 'Merhaba! Yardımcı olabilir miyim?');
-  } else {
-    bot.sendMessage(chatId, 'Mesajınız alındı!');
-  }
+bot.onText(/\/start/, async (msg) => {
+    const chatId = msg.chat.id;
+    const telegramId = msg.from.id;
+    const telegramUsername = msg.from.username;
+    // const email = `${telegramId}@survivalgame.io`
+    const buttonLogin = {
+        text: "Giriş Yap",
+        web_app: {
+            url: `https://survivalgame.onrender.com`,
+        },
+    };
+    const keyboard = [[buttonLogin]];
+    await bot.sendMessage(
+        chatId,
+        "Merhaba! Aşağıdaki butona tıklayarak survival game oyununu başlayabilirsiniz.",
+        {
+            reply_markup: {
+                inline_keyboard: keyboard,
+            },
+        }
+    );
 });
 
 
 
 const PORT = process.env.PORT || 3000;
 
-// Cross-Origin Isolation başlıkları ekleyin
+app.use(helmet());
+
+// Diğer güvenlik başlıklarını manuel olarak ekleyebilirsiniz
 app.use((req, res, next) => {
-    res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Headers", "*");
-    next();
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  res.setHeader("Permissions-Policy", "shared-array-buffer=(self)");
+
+  next();
 });
 
 // Tüm statik dosyalara Cross-Origin Isolation başlıkları ekleyin
