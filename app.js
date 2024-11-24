@@ -43,6 +43,13 @@ const PORT = process.env.PORT || 3000;
 
 app.use(helmet());
 
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      frameAncestors: ["'self'", "https://survivalgame.onrender.com"]
+    }
+  }));
+
 // Diğer güvenlik başlıklarını manuel olarak ekleyebilirsiniz
 app.use((req, res, next) => {
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
