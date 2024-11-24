@@ -6,6 +6,8 @@ const helmet = require('helmet');
 
 require('dotenv').config();
 
+const PORT = process.env.PORT || 3000;
+
 
 // .env dosyasından token'ı alıyoruz
 const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -39,34 +41,45 @@ bot.onText(/\/start/, async (msg) => {
 
 
 
-const PORT = process.env.PORT || 3000;
+
 
 // app.use(helmet());
 
-app.use(helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      frameAncestors: ["'self'", "https://survivalgame.onrender.com", "https://web.telegram.org"]
-    }
-  }));
+// Helmet ile başlıkları yönetmek
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'"],
+            frameAncestors: ["'self'", "https://survivalgame.onrender.com", "https://web.telegram.org"]
+        }
+    },
+    crossOriginEmbedderPolicy: true, // "require-corp" için Helmet
+    crossOriginOpenerPolicy: { policy: "same-origin" }, // COOP için Helmet
+}));
+
 
 // Diğer güvenlik başlıklarını manuel olarak ekleyebilirsiniz
 app.use((req, res, next) => {
-  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-  res.setHeader("Permissions-Policy", "shared-array-buffer=(self)");
-
-  next();
-});
-
-app.use((req, res, next) => {
+    res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+    res.setHeader("Permissions-Policy", "shared-array-buffer=(self)");
     res.setHeader("X-Frame-Options", "ALLOW-FROM https://survivalgame.onrender.com");
     next();
-  });
-  
+});
+
 // Tüm statik dosyalara Cross-Origin Isolation başlıkları ekleyin
-app.use(express.static(path.join(__dirname, ".")));
+// app.use(express.static(path.join(__dirname, ".")));
+
+app.use(
+    express.static(path.join(__dirname, "."), {
+        setHeaders: (res, filePath) => {
+            res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+            res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+        },
+    })
+);
+
 
 
 // Sunucuyu başlatın
