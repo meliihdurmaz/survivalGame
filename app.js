@@ -15,13 +15,6 @@ const token = process.env.TELEGRAM_BOT_TOKEN;
 // Telegram Bot'unuzu başlatıyoruz
 const bot = new TelegramBot(token, { polling: true });
 
-
-
-
-
-
-
-
 // app.use(helmet());
 
 // Helmet ile başlıkları yönetmek
@@ -48,13 +41,12 @@ app.use((req, res, next) => {
   
 
 app.use(
-    
     express.static(path.join(__dirname, "."))
-
 );
 
 bot.onText(/\/start/, async (msg) => {
     const chatId = msg.chat.id;
+    console.log(chatId);
     const telegramId = msg.from.id;
     const telegramUsername = msg.from.username;
     // const email = `${telegramId}@survivalgame.io`
