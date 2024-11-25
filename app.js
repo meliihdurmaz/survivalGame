@@ -9,11 +9,11 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 
 
-// .env dosyasından token'ı alıyoruz
-const token = process.env.TELEGRAM_BOT_TOKEN;
+// // .env dosyasından token'ı alıyoruz
+// const token = process.env.TELEGRAM_BOT_TOKEN;
 
-// Telegram Bot'unuzu başlatıyoruz
-const bot = new TelegramBot(token, { polling: true });
+// // Telegram Bot'unuzu başlatıyoruz
+// const bot = new TelegramBot(token, { polling: true });
 
 // app.use(helmet());
 
@@ -44,29 +44,29 @@ app.use(
     express.static(path.join(__dirname, "."))
 );
 
-bot.onText(/\/start/, async (msg) => {
-    const chatId = msg.chat.id;
-    console.log(chatId);
-    const telegramId = msg.from.id;
-    const telegramUsername = msg.from.username;
-    // const email = `${telegramId}@survivalgame.io`
-    const buttonLogin = {
-        text: "Giriş Yap",
-        web_app: {
-            url: `https://survivalgame.onrender.com`,
-        },
-    };
-    const keyboard = [[buttonLogin]];
-    await bot.sendMessage(
-        chatId,
-        "Merhaba! Aşağıdaki butona tıklayarak survival game oyununu başlayabilirsiniz.",
-        {
-            reply_markup: {
-                inline_keyboard: keyboard,
-            },
-        }
-    );
-});
+// bot.onText(/\/start/, async (msg) => {
+//     const chatId = msg.chat.id;
+//     console.log(chatId);
+//     const telegramId = msg.from.id;
+//     const telegramUsername = msg.from.username;
+//     // const email = `${telegramId}@survivalgame.io`
+//     const buttonLogin = {
+//         text: "Giriş Yap",
+//         web_app: {
+//             url: `https://survivalgame.onrender.com`,
+//         },
+//     };
+//     const keyboard = [[buttonLogin]];
+//     await bot.sendMessage(
+//         chatId,
+//         "Merhaba! Aşağıdaki butona tıklayarak survival game oyununu başlayabilirsiniz.",
+//         {
+//             reply_markup: {
+//                 inline_keyboard: keyboard,
+//             },
+//         }
+//     );
+// });
 
 // Sunucuyu başlatın
 app.listen(PORT, () => {
